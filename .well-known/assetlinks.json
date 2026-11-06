@@ -1,1 +1,8 @@
-
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.SweetlyMusic.app",
+        "sha256_cert_fingerprints": ["82:D0:86:44:6D:02:42:12:80:5F:30:DF:3B:D4:6E:23:E0:68:A8:EB:DC:FD:5C:87:26:46:89:B7:E9:B3:4D:81"]
+      }
+    }]
