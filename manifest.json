@@ -9,7 +9,7 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "./assets/Logo Sweetly Music.png",
+      "src": "./assets/logo-sweetly.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
