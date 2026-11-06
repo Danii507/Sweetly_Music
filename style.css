@@ -1,0 +1,669 @@
+:root {
+    --bg-color: #ffffff;
+    --card-bg: #f5f5f7;
+    --text-primary: #000000;
+    --text-secondary: #6e6e73;
+    --accent-pink: #ffb7c5;
+    --accent-pink-dark: #f472b6;
+    --border-color: #e5e5ea;
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.4);
+}
+
+body.dark-theme {
+    --bg-color: #000000;
+    --card-bg: #1c1c1e;
+    --text-primary: #ffffff;
+    --text-secondary: #8e8e93;
+    --border-color: #2c2c2e;
+    --glass-bg: rgba(28, 28, 30, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.12);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    overflow: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Contenedor adaptativo: Marco de celular en PC / 100% Pantalla en APK Android */
+.app-container {
+    max-width: 430px;
+    width: 100%;
+    height: 100vh;
+    max-height: 844px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: var(--bg-color);
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    border-radius: 0;
+}
+
+/* Bordes redondeados de maquetado solo cuando se visualiza en monitores PC */
+@media (min-width: 500px) and (min-height: 850px) {
+    .app-container {
+        border-radius: 36px;
+        border: 1px solid var(--border-color);
+    }
+}
+
+/* Header de la App */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px 8px 20px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.main-header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    color: var(--accent-pink-dark);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+    transition: transform 0.1s ease;
+}
+
+.icon-btn:active {
+    transform: scale(0.9);
+}
+
+.icon-btn.hidden {
+    display: none;
+}
+
+/* Banner de Saludo Personalizado */
+.greeting-banner {
+    position: relative;
+    margin: 6px 20px 18px 20px;
+    padding: 24px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, var(--accent-pink), #f472b6);
+    color: #ffffff;
+    overflow: visible;
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 8px 20px rgba(244, 114, 182, 0.25);
+}
+
+.banner-content {
+    max-width: 65%;
+    z-index: 2;
+}
+
+.greeting-text {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.25;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.12);
+}
+
+.banner-artist-img {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    height: 100%;
+    max-width: 50%;
+    object-fit: cover;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* Vistas y Contenedor */
+.content-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 20px 100px 20px;
+    scrollbar-width: none;
+}
+
+.content-area::-webkit-scrollbar {
+    display: none;
+}
+
+.view-section {
+    display: none;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.view-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Menú Principal iOS */
+.menu-list {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+.menu-icon {
+    color: var(--accent-pink-dark);
+    margin-right: 14px;
+}
+
+.menu-item span {
+    flex: 1;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.arrow-icon {
+    color: var(--text-secondary);
+}
+
+/* Cuadrícula de Recientes (2 columnas hacia abajo) */
+.section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+/* Cuadrícula de Recientes: 2 columnas ordenadas hacia abajo */
+#top50Container {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+.top50-card {
+    display: flex;
+    flex-direction: column;
+    width: 100% !important;
+    min-width: 0 !important;
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+
+.top50-card img {
+    width: 100% !important;
+    height: 130px !important;
+    border-radius: 12px;
+    object-fit: cover !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    margin-bottom: 6px;
+}
+
+.top50-card .title,
+.top50-card .subtitle {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Listas */
+.list-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+}
+
+.list-row img {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-right: 14px;
+}
+
+.list-row.artist-row img {
+    border-radius: 50%;
+}
+
+.list-row-info {
+    flex: 1;
+}
+
+.list-row-info .main-text {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.list-row-info .sub-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+/* Grillas */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.grid-card {
+    cursor: pointer;
+}
+
+.grid-card img {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 14px;
+    object-fit: cover;
+    margin-bottom: 8px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+}
+
+/* Botones de Acción Superior */
+.action-buttons-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.action-btn {
+    flex: 1;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--accent-pink-dark);
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+/* Vista Detalle */
+.detail-header {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.detail-cover {
+    width: 180px;
+    height: 180px;
+    border-radius: 18px;
+    object-fit: cover;
+    margin-bottom: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Mini Player Flotante Estilo iOS */
+.mini-player {
+    position: fixed;
+    bottom: 20px;
+    left: 16px;
+    right: 16px;
+    height: 64px;
+    /* Fondo blanco con transparencia (0.6) para que se note el efecto cristal claro */
+    background: rgba(255, 255, 255, 0.6); 
+    /* Desenfoque fuerte para que lo que pase por detrás se vea borroso */
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    /* Borde translúcido sutil para darle profundidad */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    cursor: pointer;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.12);
+    z-index: 100;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Oculta el mini player completamente cuando no hay reproducción activa */
+.mini-player.hidden {
+    display: none !important;
+}
+
+.mini-player img {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.mini-info {
+    flex: 1;
+    margin: 0 12px;
+    overflow: hidden;
+}
+
+.mini-title {
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mini-artist {
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--accent-pink-dark);
+}
+
+.mini-controls {
+    display: flex;
+    gap: 6px;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    padding: 6px;
+    cursor: pointer;
+}
+
+/* Full Player Modal */
+.full-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-color);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.full-player.active {
+    transform: translateY(0);
+}
+
+.player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+}
+
+.format-badge {
+    font-size: 10px;
+    background-color: var(--card-bg);
+    color: var(--accent-pink-dark);
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-top: 4px;
+}
+
+/* Contenedor principal del reproductor completo */
+.player-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 16px 24px;
+    box-sizing: border-box;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+/* --- ORDEN POR DEFECTO (Modo Carátula) --- */
+.art-container {
+    order: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.art-container img {
+    width: 250px;
+    height: 250px;
+    max-width: 70vw;
+    max-height: 70vw;
+    border-radius: 20px;
+    object-fit: cover;
+    box-shadow: 0 14px 35px rgba(0,0,0,0.3);
+}
+
+.track-details {
+    order: 2;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.lyrics-container {
+    display: none; /* Oculto por defecto */
+    order: 2;
+    width: 100%;
+    flex: 1;
+    background-color: transparent !important;
+    border-radius: 0;
+    padding: 0 5px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    box-sizing: border-box;
+}
+
+.lyrics-container::-webkit-scrollbar {
+    display: none;
+}
+
+.progress-bar-container {
+    order: 3;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.main-controls {
+    order: 4;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+
+/* --- ORDEN Y ESTILOS EN MODO LETRAS (Estilo Spotify) --- */
+.full-player.lyrics-active .art-container {
+    display: none !important; /* Oculta la carátula grande */
+}
+
+.full-player.lyrics-active .track-details {
+    order: 1 !important;      /* Mueve la info de la canción arriba del todo */
+    margin-bottom: 15px;
+}
+
+.full-player.lyrics-active .lyrics-container {
+    display: block !important; /* Muestra el contenedor de letras en el centro */
+    order: 2 !important;
+    flex: 1 !important;
+    height: auto !important;
+}
+
+.full-player.lyrics-active .progress-bar-container {
+    order: 3 !important;      /* Mantiene la barra de progreso abajo */
+}
+
+.full-player.lyrics-active .main-controls {
+    order: 4 !important;      /* Mantiene los controles en la parte inferior */
+}
+
+/* Tipografía y diseño de las letras limpias */
+.lyrics-text {
+    font-size: 18px;
+    line-height: 2.2;
+    font-weight: 600;
+    text-align: left;         /* Alineadas a la izquierda */
+}
+
+.lyric-line {
+    transition: all 0.3s ease;
+    margin-bottom: 16px;
+    color: rgba(255, 255, 255, 0.4); /* Versos inactivos tenues */
+}
+
+/* Línea activa iluminada y brillante en tiempo real */
+.lyric-line.active-lyric, 
+.lyric-line[style*="font-weight: 700"] {
+    color: #ffb6c1 !important;
+    font-weight: 700 !important;
+    font-size: 20px;           /* Ligeramente más grande la línea activa */
+}
+
+.track-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Carátula mini al lado del título (solo aparece en modo letras) */
+.player-thumb-mini {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 12px;
+    display: none; /* Oculta por defecto en vista normal */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    flex-shrink: 0;
+}
+
+.full-player.lyrics-active .player-thumb-mini {
+    display: block !important; /* Se muestra al activar las letras */
+}
+
+.track-text-info {
+    flex: 1;
+    overflow: hidden;
+}
+
+.track-details h2 {
+    font-size: 16px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+.track-details p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 2px 0 0 0;
+}
+
+.progress-bar-container input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent-pink-dark);
+}
+
+.time-stamps {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+}
+
+.main-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.play-btn-large {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: var(--accent-pink-dark);
+    border: none;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(244, 114, 182, 0.4);
+}
+
