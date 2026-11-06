@@ -3,25 +3,22 @@
   "short_name": "Sweetly Music",
   "description": "Tu reproductor de música personal con estilo",
   "start_url": "./index.html",
-  "display": "fullcsreen",
+  "display": "standalone",
   "background_color": "#ffb7c5",
   "theme_color": "#ffb7c5",
   "orientation": "portrait",
   "icons": [
     {
       "src": "./assets/logo-sweetly.png",
-      "sizes": "192x192 512x512",
+      "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ],
-  "screenshots": [
+      "purpose": "any"
+    },
     {
-      "src": "./assets/splash-pantalla.png",
-      "sizes": "1080x1920",
+      "src": "./assets/logo-sweetly.png",
+      "sizes": "512x512",
       "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Pantalla de bienvenida de Sweetly Music"
+      "purpose": "maskable"
     }
   ]
 }
